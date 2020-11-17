@@ -16,9 +16,11 @@ It cannot download:
 1. Python 3+. You can download it here: https://www.python.org/downloads/. If you have to install it, make sure that you mark 'add Python ... to PATH' and click 'Install Now' to avoid potential problems.
 2. The Python libraries below are required to run this program. If you use windows you can run the 'python libraries installer.bat' to download them automatically. You can also install them manually with the command line/prompt/console/terminal:
 
-  pip install requests
-  pip install lxml
-  pip install beautifulsoup4
+**pip install requests**
+
+**pip install lxml**
+
+**pip install beautifulsoup4**
   
 # How to run it?
 1. Download the the whole package or at least these files:
