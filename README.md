@@ -1,4 +1,4 @@
-# Fimfiction_downloader
+# fimfiction-stories-downloader
 It downloads multiple stories from bookshelfs, folders and other lists of stories on fimfiction.net. You can choose one of three file formats that are available on fimfiction.net.
 
 It can download:
