@@ -13,21 +13,24 @@ It cannot download:
 - story chapters,
 
 # Requirements:
-1. Python 3+. You can download it here: https://www.python.org/downloads/. If you have to install it, make sure that you mark 'add Python ... to PATH' and click 'Install Now' to avoid potential problems.
-2. The Python libraries below are required to run this program. If you use windows you can run the 'python libraries installer.bat' to download them automatically. You can also install them manually with the command line/prompt/console/terminal:
+1. Windows 7, 8 or 10. Linux or macOS are not officially supported.
+2. Python 3+. You can download it here: https://www.python.org/downloads/. If you have to install it, make sure that you mark 'add Python ... to PATH' and click 'Install Now' in the installer to avoid potential problems.
+3. The Python libraries below are required to run this program. If you use windows you can run the 'python libraries installer.bat' to download them automatically. You can also install them manually with the command line/prompt/console/terminal:
+```
+pip install requests
 
-**pip install requests**
+pip install lxml
 
-**pip install lxml**
-
-**pip install beautifulsoup4**
+pip install beautifulsoup4
+```
   
 # How to run it?
 1. Download the the whole package or at least these files:
 - fimfiction_stories_downloader.py,
 - python libraries installer.bat,
 - script starter.bat,
-2. There are at least two ways you can run this program (Applies only to Windows. If you have linux or a different operating system, check yourself how to run python scripts in your system):
-- Open python libraries installer.bat if you are missing the libraries and then open script starter.bat
-- Go to the folder with this program. Then press Shift + right click mouse button anywhere in the folder window and Select the “Open command window here” option from the context menu. Then enter 'python fimfiction_stories_downloader.py'.
-3. Answer a few simple questions to indicate what you want to download.
+2. There are a few to run this program:
+- Open 'python libraries installer.bat' if you are missing the Python libraries and then open 'script starter.bat'
+- Go to the folder with this program. Then press Shift + right click mouse button anywhere in the folder window and select the 'Open command window here' option from the context menu. Then enter 'python fimfiction_stories_downloader.py' and click enter.
+- Open the 'command line' and go to the directory with the program files using the 'cd' command. Then enter 'python fimfiction_stories_downloader.py' to launch the script.
+3. Answer a few simple questions to indicate what you want to download. The program uses the card view to count the number of stories and pages (except for search results, popular stories etc.) so you have to keep that in mind when you paste links into it.
