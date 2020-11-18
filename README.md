@@ -10,7 +10,7 @@ It can download:
 
 It cannot download:
 - individual stories after you enter links to them,
-- story chapters,
+- story chapters.
 
 # Requirements:
 1. Windows 7, 8 or 10. Linux or macOS are not officially supported.
