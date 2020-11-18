@@ -34,3 +34,4 @@ pip install beautifulsoup4
 - Go to the folder with this program. Then press Shift + right click mouse button anywhere in the folder window and select the 'Open command window here' option from the context menu. Then enter 'python fimfiction_stories_downloader.py' and click enter.
 - Open the 'command line' and go to the directory with the program files using the 'cd' command. Then enter 'python fimfiction_stories_downloader.py' to launch the script.
 3. Answer a few simple questions to indicate what you want to download. The program uses the card view to count the number of stories and pages (except for search results, popular stories etc.) so you have to keep that in mind when you paste links into it.
+4. Stories will be saved to the folder 'downloaded stories' that will be automatically created in the same folder where you put the program.
