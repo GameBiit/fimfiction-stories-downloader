@@ -20,7 +20,7 @@ def main_program():
         Get the url from a user and store the url for further use
         """
         website_url = input(
-            "Enter the address of a public or unlisted bookshelf or folder. It has to start with 'https://www': ")
+            "Enter the address of a public or unlisted bookshelf or folder.\nIt has to start with 'https://www': ")
         if 'fimfiction.net/story' in website_url:
             print("This program cannot download single stories. You need the website address with a list of stories.")
             main_program()
@@ -32,7 +32,7 @@ def main_program():
         """
         session = requests.Session()
         jar = requests.cookies.RequestsCookieJar()
-        mature_content = input("Do you want to include adult stories?(y/n):").lower()
+        mature_content = input("\nDo you want to include adult stories?(y/n): ").lower()
         if mature_content == 'y' or mature_content == 'yes':
             jar.set('view_mature', 'true')
         else:
@@ -61,7 +61,7 @@ def main_program():
         """
         output = ""
         while True:
-            chosen_file_format = input('Choose the file format (enter a number): 1—txt, 2—html, 3—epub: ').lower()
+            chosen_file_format = input('\nChoose the file format (enter a number): 1—txt, 2—html, 3—epub: ').lower()
             if chosen_file_format == '1' or chosen_file_format == 'txt' or chosen_file_format == '1-txt':
                 output = '/txt'
                 break
@@ -99,9 +99,10 @@ def main_program():
             while True:
                 if end_page != 0:
                     users_range_of_pages = input(
-                        "What do you want to download? (enter '1' or '2'):\n1-only stories from the current page\n2-stories from all pages starting from the current one")
+                        "\nWhat do you want to download? (enter '1' or '2'):\n1-only stories from the current page\n2-stories from all pages starting from the current one\n")
                     if users_range_of_pages == "1":
                         end_page = 0
+                        break
                     elif users_range_of_pages == "2":
                         break
                     else:
@@ -172,7 +173,7 @@ def main_program():
                 stripped_filename = filename[1:-2].translate(str.maketrans(translator))
             download_path = 'downloaded_stories/' + stripped_filename
             open(download_path, 'wb').write(fetched_file.content)
-        print("Your stories have been downloaded. Check the folder 'downloaded_stories' in the folder with this program.")
+        print("Your stories have been downloaded. Check the folder 'downloaded_stories' in the folder with this program.\n")
 
     while True:
         create_download_folder()
