@@ -22,9 +22,7 @@ It cannot download:
 2. Install the Python libraries if they are missing or if you are not sure if you have them. You just have to double-click on the 'python libraries installer.bat'. The other method is to use these commands in the command line:
 ```
 pip install requests
-
 pip install lxml
-
 pip install beautifulsoup4
 ```
 3. Download the whole package (but don't forget to unpack it) or at least these files:
