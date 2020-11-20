@@ -29,7 +29,7 @@ pip install beautifulsoup4
 - fimfiction_stories_downloader.py,
 - python libraries installer.bat,
 - script starter.bat,
-2. There are a few to run this program:
+2. There are a few ways to run this program:
 - If you are missing the python libraries or if you are not sure if you have them, open the 'python libraries installer.bat'. Otherwise skip this step. Then open the 'script starter.bat' to launch the script.
 - Go to the folder with this program. Then press Shift + right click mouse button anywhere in the folder window and select the 'Open command window here' option from the context menu. Then enter 'python fimfiction_stories_downloader.py' and click enter.
 - Open the 'command line' and go to the directory with the program files using the 'cd' command. Then enter 'python fimfiction_stories_downloader.py' to launch the script.
