@@ -175,15 +175,13 @@ def main_program():
             open(download_path, 'wb').write(fetched_file.content)
         print("Your stories have been downloaded. Check the folder 'downloaded_stories' in the folder with this program.\n")
 
-    while True:
-        create_download_folder()
+    while True:       
         website_url = get_the_website_address()
         session = establish_a_session()
         soup = get_the_website_data()
+        create_download_folder()
         output = choose_file_format()
         save_files()
-        main_program()
-
 
 if __name__ == "__main__":
     main_program()
