@@ -13,7 +13,7 @@ It cannot download:
 - story chapters.
 
 # Requirements:
-1. Windows 7, 8 or 10 and Linux.
+1. Windows (7, 8 or 10), Linux or macOS.
 2. Python 3+ (the compatibility was confirmed for Python 3.8 and 3.9).
 3. Python libraries: requests, lxml and beautifulsoup4. 
   
@@ -54,3 +54,6 @@ python3 /home/user/Desktop/fimfiction_stories_downloader.py
 ```
 5. Answer a few simple questions to indicate what you want to download. The program uses the card view to count the number of stories and pages (except for search results, popular stories etc.) so you have to keep that in mind when you paste links into it.
 6. Stories will be saved to the folder 'downloaded stories' that will be automatically created in the same folder where you put the program.
+
+# How to run it on macOS?
+You have to figure it out yourself.
