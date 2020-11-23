@@ -35,8 +35,6 @@ def main_program():
         mature_content = input("\nDo you want to include adult stories?(y/n): ").lower()
         if mature_content == 'y' or mature_content == 'yes':
             jar.set('view_mature', 'true')
-        else:
-            pass
         jar.set('d_browse_bookshelf', '2')  # grid-like view
         session.cookies = jar
         return session
@@ -73,7 +71,6 @@ def main_program():
                 break
             else:
                 print("You entered something incorrect. Try again.")
-                continue
         return output
 
     def range_of_pages():
@@ -107,9 +104,6 @@ def main_program():
                         break
                     else:
                         print("You entered something incorrect. Try again!")
-                        continue
-                else:
-                    pass
         return current_page, end_page
 
     def stories_and_pages_loop():
