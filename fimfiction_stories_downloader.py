@@ -6,6 +6,9 @@ import os.path
 
 def main_program():
 
+    class FfsdError(Exception):
+        pass
+
     def create_download_folder():
         """
         Create a download folder if it does not exist
@@ -22,8 +25,7 @@ def main_program():
         website_url = input(
             "Enter the address of a public or unlisted bookshelf or folder.\nIt has to start with 'https://www': ")
         if 'fimfiction.net/story' in website_url:
-            print("This program cannot download single stories. You need the website address with a list of stories.")
-            main_program()
+            raise FfsdError("This program cannot download single stories. You need the website address with a list of stories.")
         return website_url
 
     def establish_a_session():
@@ -47,9 +49,8 @@ def main_program():
         try:
             source = session.get(website_url).text
         except requests.exceptions.MissingSchema:
-            print(
+            raise FfsdError(
                 "Incorrect address. Check it for mistakes.\nRemember that it has to start with 'https://www'. Try again.")
-            main_program()
         soup = BeautifulSoup(source, "lxml")
         return soup
 
@@ -166,16 +167,21 @@ def main_program():
             else:
                 stripped_filename = filename[1:-2].translate(str.maketrans(translator))
             download_path = 'downloaded_stories/' + stripped_filename
-            open(download_path, 'wb').write(fetched_file.content)
+
+            with open(download_path, 'wb') as file:
+                file.write(fetched_file.content)
         print("Your stories have been downloaded. Check the folder 'downloaded_stories' in the folder with this program.\n")
 
-    while True:       
-        website_url = get_the_website_address()
-        session = establish_a_session()
-        soup = get_the_website_data()
-        create_download_folder()
-        output = choose_file_format()
-        save_files()
+    while True:
+        try:
+            website_url = get_the_website_address()
+            session = establish_a_session()
+            soup = get_the_website_data()
+            create_download_folder()
+            output = choose_file_format()
+            save_files()
+        except FfsdError as err:
+            print(err)
 
 if __name__ == "__main__":
     main_program()
