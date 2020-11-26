@@ -24,63 +24,56 @@ def main_program():
         """
         Get the url from a user and store the url for further use
         """
-        website_url = input(
+        url = input(
             "Enter the address of a public or unlisted bookshelf or folder.\nIt has to start with 'https://www': ")
-        if 'fimfiction.net/story' in website_url:
-            raise FfsdError("This program cannot download single stories. You need the website address with a list of stories.")
+        if 'fimfiction.net/story' in url:
+            raise FfsdError(
+                "This program cannot download single stories. You need the website address with a list of stories.")
 
-        parsed_url = list(urlparse.urlparse(website_url))
-        url_query = dict(urlparse.parse_qsl(parsed_url[4]))  # 4 as an equivalent to parsed_url.query
-        url_query['view_mode'] = '2'                         # sometimes the cookie doesn't work, so double tap it
-        parsed_url[4] = urlparse.urlencode(url_query)
-        website_url = urlparse.urlunparse(parsed_url)
-        return website_url, parsed_url, url_query
+        parsed = list(urlparse.urlparse(url))
+        query = dict(urlparse.parse_qsl(parsed[4]))  # 4 as an equivalent to parsed_url.query
+        query['view_mode'] = '2'                     # sometimes the cookie doesn't work, so double tap it
+        parsed[4] = urlparse.urlencode(query)
+        url = urlparse.urlunparse(parsed)
+        return url, parsed, query
 
     def establish_a_session():
         """
         Create a session with cookies
         """
-        session = requests.Session()
+        new_session = requests.Session()
         jar = requests.cookies.RequestsCookieJar()
         mature_content = input("\nDo you want to include adult stories?(y/n): ").lower()
         if mature_content == 'y' or mature_content == 'yes':
             jar.set('view_mature', 'true')
         jar.set('d_browse_bookshelf', '2')  # grid-like view
-        session.cookies = jar
-        return session
+        new_session.cookies = jar
+        return new_session
 
     def get_the_website_data():
         """
         Get the source code of a website and check if the address is correct
         """
-        source = ""
         try:
             source = session.get(website_url).text
         except requests.exceptions.MissingSchema:
-            raise FfsdError(
-                "Incorrect address. Check it for mistakes.\nRemember that it has to start with 'https://www'. Try again.")
-        soup = BeautifulSoup(source, "lxml")
-        return soup
+            raise FfsdError("Incorrect address. Check it for mistakes.\n"
+                            "Remember that it has to start with 'https://www'. Try again.")
+        return BeautifulSoup(source, "lxml")
 
     def choose_file_format():
         """
         Choose the format of story
         """
-        output = ""
         while True:
             chosen_file_format = input('\nChoose the file format (enter a number): 1-txt, 2-html, 3-epub: ').lower()
             if chosen_file_format == '1' or chosen_file_format == 'txt' or chosen_file_format == '1-txt':
-                output = '/txt'
-                break
-            elif chosen_file_format == '2' or chosen_file_format == 'html' or chosen_file_format == '2-html':
-                output = '/html'
-                break
-            elif chosen_file_format == '3' or chosen_file_format == 'epub' or chosen_file_format == '3-epub':
-                output = '/epub'
-                break
-            else:
-                print("You entered something incorrect. Try again.")
-        return output
+                return '/txt'
+            if chosen_file_format == '2' or chosen_file_format == 'html' or chosen_file_format == '2-html':
+                return '/html'
+            if chosen_file_format == '3' or chosen_file_format == 'epub' or chosen_file_format == '3-epub':
+                return '/epub'
+            print("You entered something incorrect. Try again.")
 
     def range_of_pages(soup):
         """
@@ -99,8 +92,9 @@ def main_program():
             list_of_pages = soup.find(class_='page_list')  # more than one page and not the last page
             end_page = int(list_of_pages.findAll('a', href=True)[-2].text)
             while end_page != current_page:
-                users_range_of_pages = input(
-                    "\nWhat do you want to download? (enter '1' or '2'):\n1-only stories from the current page\n2-stories from all pages starting from the current one\n")
+                users_range_of_pages = input("\nWhat do you want to download? (enter '1' or '2'):\n"
+                                             "1-only stories from the current page\n"
+                                             "2-stories from all pages starting from the current one\n")
                 if users_range_of_pages == "1":
                     end_page = current_page
                 elif users_range_of_pages == "2":
@@ -145,27 +139,40 @@ def main_program():
         fetched_name = re.findall('filename=(.+)', cd)
         if len(fetched_name) == 0:
             return None
-        return fetched_name[0]
+
+        filename = fetched_name[0].encode('latin-1').decode('utf-8')
+        try:
+            return eval(filename.rstrip(';'))
+        except SyntaxError:
+            return filename
+
+    def check_filepath(path, story_id):
+        if os.path.exists(path):
+            in_id = path.rfind('.')
+            return path[:in_id] + '_' + story_id + path[in_id:] if in_id != -1 else path + '_' + story_id
+        return path
 
     def save_files():
         """
         Save the stories
         """
-        all_links = stories_and_pages_loop()
-        for item in all_links:
-            fetched_file = session.get(item, allow_redirects=True)
-            filename = get_filename_from_cd(fetched_file.headers.get('content-disposition'))
-            translator = {'!': '', '?': '', ':': '', '': '', 'ã': '', '/': '', '<': '', '>': '', '\\': '', '"': '',
-                          '|': '', '*': ''}
-            if output == '/txt' or output == '/html':
-                stripped_filename = filename[1:-1].translate(str.maketrans(translator))
-            else:
-                stripped_filename = filename[1:-2].translate(str.maketrans(translator))
-            download_path = 'downloaded_stories/' + stripped_filename
+        translator = {'/': ''}
+        if sys.platform in ['win32', 'cygwin']:
+            translator.update({'<': '', '>': '', ':': '', '"': '', '\\': '', '|': '', '?': '', '*': ''})
 
+        for story_link in stories_and_pages_loop():
+            story_id = story_link.split('/')[-2]
+            fetched_file = session.get(story_link, allow_redirects=True)
+            filename = get_filename_from_cd(fetched_file.headers.get('content-disposition'))
+            if not filename:
+                filename = story_id + '.' + story_link.split('/')[-1]  # fallback to 'id.ext'
+
+            stripped_filename = filename.translate(str.maketrans(translator))
+            download_path = check_filepath(os.path.join('downloaded_stories', stripped_filename), story_id)
             with open(download_path, 'wb') as file:
                 file.write(fetched_file.content)
-        print("Your stories have been downloaded. Check the folder 'downloaded_stories' in the folder with this program.\n")
+        print("Your stories have been downloaded.",
+              "Check the folder 'downloaded_stories' in the folder with this program.\n")
 
     while True:
         try:
@@ -176,6 +183,7 @@ def main_program():
             save_files()
         except FfsdError as err:
             print(err)
+
 
 if __name__ == "__main__":
     main_program()
