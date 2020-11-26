@@ -24,6 +24,7 @@ It cannot download:
 pip install requests
 pip install lxml
 pip install beautifulsoup4
+pip install urllib3
 ```
 3. Download the whole package (but don't forget to unpack it) or at least these files:
 - 'fimfiction_stories_downloader.py',
@@ -41,11 +42,12 @@ pip install beautifulsoup4
 ```
 sudo apt install python-3 pip
 ```
-2. Then provide the root password and enter:
+2. Then provide the root password and either run 'python_libraries_installer.sh' or install the libraries manually by running these commands:
 ```
 pip3 install requests
 pip3 install lxml
 pip3 install beautifulsoup4
+pip3 install urllib3
 ```
 3. Download the 'fimfiction_stories_downloader.py'
 4. Now find out the address of the file by checking its properties and enter it into the terminal afer 'python3" to start the program. It should looks similar to this one:

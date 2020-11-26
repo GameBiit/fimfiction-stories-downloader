@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import os.path
+import sys
+import urllib.parse as urlparse
 
 
 def main_program():
@@ -26,7 +28,13 @@ def main_program():
             "Enter the address of a public or unlisted bookshelf or folder.\nIt has to start with 'https://www': ")
         if 'fimfiction.net/story' in website_url:
             raise FfsdError("This program cannot download single stories. You need the website address with a list of stories.")
-        return website_url
+
+        parsed_url = list(urlparse.urlparse(website_url))
+        url_query = dict(urlparse.parse_qsl(parsed_url[4]))  # 4 as an equivalent to parsed_url.query
+        url_query['view_mode'] = '2'                         # sometimes the cookie doesn't work, so double tap it
+        parsed_url[4] = urlparse.urlencode(url_query)
+        website_url = urlparse.urlunparse(parsed_url)
+        return website_url, parsed_url, url_query
 
     def establish_a_session():
         """
@@ -60,7 +68,7 @@ def main_program():
         """
         output = ""
         while True:
-            chosen_file_format = input('\nChoose the file format (enter a number): 1—txt, 2—html, 3—epub: ').lower()
+            chosen_file_format = input('\nChoose the file format (enter a number): 1-txt, 2-html, 3-epub: ').lower()
             if chosen_file_format == '1' or chosen_file_format == 'txt' or chosen_file_format == '1-txt':
                 output = '/txt'
                 break
@@ -74,69 +82,56 @@ def main_program():
                 print("You entered something incorrect. Try again.")
         return output
 
-    def range_of_pages():
+    def range_of_pages(soup):
         """
         Get the current page and the total number of pages. If there is more than one page, you can choose the range.
         """
-        try:
-            current_page = int(website_url.split('=', 2)[-1])  # more than 1 page
-        except ValueError:
-            current_page = 0  # one or first page of many
+        current_page = int(url_query.get('page', '1'))
         if not soup.find(class_='fa fa-chevron-right'):
-            end_page = 0  # last page or only 1 page
+            end_page = current_page  # last page or only 1 page
 
             # it downloads the current page of stories from the 'popular stories', 'newest stories' etc.
             # it also prevents from downloading thousands of stories at once from the search results by accident
         elif 'fimfiction.net/stories?' in website_url:
-            end_page = 0
+            end_page = current_page
 
         else:
             list_of_pages = soup.find(class_='page_list')  # more than one page and not the last page
-            last_page = int(list_of_pages.findAll('a', href=True)[-2].text)
-            end_page = last_page - current_page
-            while True:
-                if end_page != 0:
-                    users_range_of_pages = input(
-                        "\nWhat do you want to download? (enter '1' or '2'):\n1-only stories from the current page\n2-stories from all pages starting from the current one\n")
-                    if users_range_of_pages == "1":
-                        end_page = 0
-                        break
-                    elif users_range_of_pages == "2":
-                        break
-                    else:
-                        print("You entered something incorrect. Try again!")
+            end_page = int(list_of_pages.findAll('a', href=True)[-2].text)
+            while end_page != current_page:
+                users_range_of_pages = input(
+                    "\nWhat do you want to download? (enter '1' or '2'):\n1-only stories from the current page\n2-stories from all pages starting from the current one\n")
+                if users_range_of_pages == "1":
+                    end_page = current_page
+                elif users_range_of_pages == "2":
+                    break
+                else:
+                    print("You entered something incorrect. Try again!")
         return current_page, end_page
 
     def stories_and_pages_loop():
         """
         Get links to stories from a page and move to the next ones
         """
-        start_page = 0
         all_links = []
         soup = get_the_website_data()
-        current_page, end_page = range_of_pages()
-        while start_page < end_page + 1:
-            counter_of_stories = len(soup.findAll(class_="story_link"))
-            start = 0
+        current_page, end_page = range_of_pages(soup)
+
+        while True:
             beginning = 'https://www.fimfiction.net/story/download/'
 
-            while start < counter_of_stories:
-                match = soup.findAll(class_="story_link")[start]
-                link = match.attrs["href"]
+            for story in soup.findAll(class_=['story_link', 'story_name']):
+                link = story.attrs["href"]
                 identifier = link.split("/")[2]
                 all_links.append(beginning + identifier + output)
-                start = start + 1
 
-            if end_page == 0:
+            if current_page == end_page:
                 break
-            start_page += 1
-            if current_page == 0:
-                current_page = 1
+            current_page += 1
 
-            if "&" in website_url:
-                next_page = "=".join(website_url.split("=", 2)[:2]) + "=" + str(current_page + 1)
-            else:
-                next_page = website_url + '?page=' + str(current_page + 1)
+            url_query['page'] = str(current_page)
+            parsed_url[4] = urlparse.urlencode(url_query)
+            next_page = urlparse.urlunparse(parsed_url)
             next_source = session.get(next_page).text
             soup = BeautifulSoup(next_source, "lxml")
         return all_links
@@ -174,9 +169,8 @@ def main_program():
 
     while True:
         try:
-            website_url = get_the_website_address()
+            website_url, parsed_url, url_query = get_the_website_address()
             session = establish_a_session()
-            soup = get_the_website_data()
             create_download_folder()
             output = choose_file_format()
             save_files()
