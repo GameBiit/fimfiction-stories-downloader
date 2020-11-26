@@ -1,0 +1,13 @@
+- homepage - https://www.fimfiction.net
+- popular stories - https://www.fimfiction.net/stories?order=heat
+- search results - https://www.fimfiction.net/stories?q=test
+
+- bookshelf with 1 page - https://www.fimfiction.net/bookshelf/1364910/tracking
+- bookshelf with more than 1 page - https://www.fimfiction.net/bookshelf/157830/favourites
+- bookshelf with more than 1 page and sorted - https://www.fimfiction.net/bookshelf/157830/favourites?order=updated
+- 2nd page of a bookshelf with 3 pages - https://www.fimfiction.net/bookshelf/162965/stories-i-love?page=2
+
+- folder with 1 page - https://www.fimfiction.net/group/134/folder/19217/dantes-inferno
+- 1st page of a folder with 3 pages and sorted - https://www.fimfiction.net/group/134/folder/10775/the-legend-of-zelda?order=words
+- 2nd page of a folder with 3 pages and sorted - https://www.fimfiction.net/group/134/folder/10775/the-legend-of-zelda?order=words&page=2
+- 3rd page of a folder with 3 pages and sorted - https://www.fimfiction.net/group/134/folder/10775/the-legend-of-zelda?order=words&page=3
