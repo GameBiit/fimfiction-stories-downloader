@@ -21,7 +21,7 @@ To view the the program's command line arguments, run it with the '-h' or '--hel
 
 # How to run it on Windows?
 
-## For users who do not know much about computers:
+## For users who do not know much about computers
 
 1. Download and install the newest version of Python from https://www.python.org/downloads (make sure that you mark 'add Python ... to PATH' and click 'Install Now' in the installer to avoid potential problems),
 2. Download this program from GitHub by clicking the green button with the word "<> code" on the top of the page,
