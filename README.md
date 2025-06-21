@@ -17,9 +17,21 @@ To view the the program's command line arguments, run it with the '-h' or '--hel
 # Requirements:
 1. Windows (7, 8 or 10), Linux or macOS.
 2. Python 3+ (the compatibility was confirmed for Python 3.8 and 3.9).
-3. Python libraries: requests, lxml and beautifulsoup4.
+3. Python libraries: requests, lxml, beautifulsoup4 and urllib3.
 
 # How to run it on Windows?
+
+## For users who do not know much about computers:
+
+1. Download and install the newest version of Python from https://www.python.org/downloads (make sure that you mark 'add Python ... to PATH' and click 'Install Now' in the installer to avoid potential problems),
+2. Download this program from GitHub by clicking the green button with the word "<> code" on the top of the page,
+3. Unpack the zip file somewhere,
+4. Go do the unpacked folder with the program and open the 'python libraries installer.bat',
+5. Open 'script starter.bat',
+6. Answer a few simple questions to indicate what you want to download. The program uses the card view to count the number of stories and pages so you have to keep that in mind when you paste links into it.
+7. Stories will be saved to the folder 'downloaded_stories' that will be automatically created in the folder with the program.
+
+## For computer enthusiasts
 1. Install the newest version of Python if you don't have it yet. You can download it here: https://www.python.org/downloads/. Make sure that you mark 'add Python ... to PATH' and click 'Install Now' in the installer to avoid potential problems.
 2. Install the Python libraries if they are missing or if you are not sure if you have them. You just have to double-click on the 'python libraries installer.bat'. The other method is to use these commands in the command line:
 ```
@@ -28,7 +40,7 @@ pip install lxml
 pip install beautifulsoup4
 pip install urllib3
 ```
-3. Download the whole package (but don't forget to unpack it) or at least these files:
+3. Download the whole package by clicking the green button at the top of this page (but don't forget to unpack it) or at least these files:
 - 'fimfiction_stories_downloader.py',
 - 'python libraries installer.bat',
 - 'script starter.bat',
