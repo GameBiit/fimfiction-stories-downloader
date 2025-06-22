@@ -1,4 +1,7 @@
 # fimfiction-stories-downloader
+
+## <ins>***The program currently does not work due to the introduction of Cloudflare protection***</ins>
+
 It downloads multiple stories from bookshelves, folders and other lists of stories on fimfiction.net. You can choose one of three file formats that are available on fimfiction.net.
 
 It can download:
