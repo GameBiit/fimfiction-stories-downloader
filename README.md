@@ -13,7 +13,7 @@ It cannot download:
 - individual stories after you enter links to them,
 - story chapters.
 
-## How to Run the AutoHotkey Script
+# How to Run the AutoHotkey Script
 
 1. Download the [FimfictionDownloader.exe](https://github.com/GameBiit/fimfiction-stories-downloader/raw/refs/heads/main/FimfictionDownloader.exe).
 2. Open Google Chrome or Mozilla Firefox and log in to fimfiction.net.
@@ -38,16 +38,16 @@ The example above creates a folder named 'downloaded_stories' in the folder cont
 6. Go back to your browser. The script will start running in a moment. 
 7. Do not do anything on your computer until all the stories have finished downloading. This may take a while, so it's a good idea to take a break from your computer during this time. The script will show you the download status.
 
-## The Python script described below is currently not working because it cannot handle Cloudflare's security mechanisms. Please use the AutoHotkey script described above instead.
+# The Python script described below is currently not working because it cannot handle Cloudflare's security mechanisms. Please use the AutoHotkey script described above instead.
 
 To view the the program's command line arguments, run it with the '-h' or '--help' flag. If no arguments are specified, the program behaves as described below.
 
-# Requirements:
+## Requirements:
 1. Windows (7, 8 or 10), Linux or macOS.
 2. Python 3+ (the compatibility was confirmed for Python 3.8 and 3.9).
 3. Python libraries: requests, lxml, beautifulsoup4 and urllib3.
 
-# How to run it on Windows?
+## How to run it on Windows?
 
 ## For users who do not know much about computers
 
