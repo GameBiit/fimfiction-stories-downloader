@@ -1,7 +1,5 @@
 # fimfiction-stories-downloader
 
-## <ins>***The program currently does not work due to the introduction of Cloudflare protection***</ins>
-
 It downloads multiple stories from bookshelves, folders and other lists of stories on fimfiction.net. You can choose one of three file formats that are available on fimfiction.net.
 
 It can download:
@@ -14,6 +12,33 @@ It can download:
 It cannot download:
 - individual stories after you enter links to them,
 - story chapters.
+
+## How to Run the AutoHotkey Script
+
+1. Download the [FimfictionDownloader.exe](https://github.com/GameBiit/fimfiction-stories-downloader/raw/refs/heads/main/FimfictionDownloader.exe).
+2. Open Google Chrome or Mozilla Firefox and log in to fimfiction.net.
+3. Set the “View Mature” toggle at the top of the page accordingly.
+4. Go to the page where you want to download the stories and copy its URL from the address bar.
+5. Minimise your browser window and open the file you downloaded earlier.
+6. Enter parameters according to the instructions below and click 'OK':
+
+Options:
+```
+-o, --out     Output folder
+-a, --adult   y or n
+-f, --format  txt, html, epub
+-r, --range   1=current page, 2=all pages
+Enter the URL last.
+```
+
+An example: ```-o downloaded_stories -a n -f epub -r 1 https://www.fimfiction.net/bookshelf/12345```
+
+The example above creates a folder named 'downloaded_stories' in the folder containing the script, it switches off the visibility of mature content, sets the format to .epub and downloads only the stories on the first page.
+
+6. Go back to your browser. The script will start running in a moment. 
+7. Do not do anything on your computer until all the stories have finished downloading. This may take a while, so it's a good idea to take a break from your computer during this time. The script will show you the download status.
+
+## The Python script described below is currently not working because it cannot handle Cloudflare's security mechanisms. Please use the AutoHotkey script described above instead.
 
 To view the the program's command line arguments, run it with the '-h' or '--help' flag. If no arguments are specified, the program behaves as described below.
 
